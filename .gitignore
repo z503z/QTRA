@@ -1,0 +1,49 @@
+# Local authentication and secrets
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+.credentials/
+.secrets/
+
+# Python and local environments
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.venv/
+venv/
+*.egg-info/
+
+# Data and model artifacts: provide acquisition instructions instead
+data/
+datasets/
+pretrain/
+checkpoints/
+ckps/
+*.pth
+*.pt
+*.pyth
+*.ckpt
+*.safetensors
+*.onnx
+
+# Generated experiment artifacts
+runs/
+runs_*/
+outputs/
+logs/
+wandb/
+*.log
+*.npy
+*.npz
+*.zip
+*.tar
+*.tar.gz
+
+# Editor and operating-system files
+.DS_Store
+.idea/
+.vscode/
