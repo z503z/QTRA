@@ -1,0 +1,22 @@
+{
+  "task": "qag",
+  "model": {
+    "variant": "baseline",
+    "num_answers": 23,
+    "image_size": 512
+  },
+  "training": {
+    "epochs": 20,
+    "batch_size": 4,
+    "grad_accum_steps": 4,
+    "optimizer": "adamw",
+    "lr": 0.0001,
+    "weight_decay": 0.0001,
+    "precision": "bf16",
+    "freeze_text": true,
+    "lambda_answer": 1,
+    "lambda_mask": 1,
+    "stage": "baseline"
+  },
+  "mask_threshold": 0.35
+}

@@ -1,0 +1,28 @@
+{
+  "task": "qag",
+  "model": {
+    "variant": "full",
+    "num_answers": 23,
+    "image_size": 512,
+    "x3d_depth_factor": 5,
+    "split_qra_adapter_dim": 192,
+    "split_qra_attn_dim": 96,
+    "split_qra_ans_alpha_init": 0.05,
+    "split_qra_ans_alpha_max": 0.2,
+    "split_qra_insert_after_block": 3
+  },
+  "training": {
+    "epochs": 4,
+    "batch_size": 4,
+    "grad_accum_steps": 4,
+    "optimizer": "adamw",
+    "lr": 0.0001,
+    "weight_decay": 0.0001,
+    "precision": "bf16",
+    "freeze_text": true,
+    "lambda_answer": 1,
+    "lambda_mask": 0,
+    "stage": "evidence"
+  },
+  "mask_threshold": 0.35
+}

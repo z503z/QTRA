@@ -1,0 +1,10 @@
+# Install the torch/torchvision CUDA wheels separately; see README.
+torch==2.2.0
+torchvision==0.17.0
+numpy==1.26.1
+pytorchvideo==0.1.5
+fvcore==0.1.5.post20221221
+einops==0.8.1
+ftfy==6.3.1
+regex==2026.5.9
+tqdm==4.67.1

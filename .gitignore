@@ -18,11 +18,11 @@ venv/
 *.egg-info/
 
 # Data and model artifacts: provide acquisition instructions instead
-data/
-datasets/
-pretrain/
-checkpoints/
-ckps/
+/data/
+/datasets/
+/pretrain/
+/checkpoints/
+/ckps/
 *.pth
 *.pt
 *.pyth
@@ -31,11 +31,11 @@ ckps/
 *.onnx
 
 # Generated experiment artifacts
-runs/
-runs_*/
-outputs/
-logs/
-wandb/
+/runs/
+/runs_*/
+/outputs/
+/logs/
+/wandb/
 *.log
 *.npy
 *.npz

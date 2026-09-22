@@ -1,0 +1,1 @@
+"""Checkpoint-compatible paper architectures."""

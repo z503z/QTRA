@@ -1,0 +1,26 @@
+{
+  "task": "cdvqa",
+  "model": {
+    "variant": "cdvqa",
+    "num_answers": 19,
+    "image_size": 256,
+    "x3d_depth_factor": 5,
+    "qra_adapter_dim": 192,
+    "qra_attn_dim": 96,
+    "qra_alpha_init": 0.05,
+    "qra_alpha_max": 0.2
+  },
+  "training": {
+    "epochs": 50,
+    "batch_size": 8,
+    "grad_accum_steps": 1,
+    "optimizer": "adam",
+    "lr": 0.0001,
+    "weight_decay": 0.0001,
+    "precision": "fp32",
+    "freeze_text": false,
+    "lambda_answer": 1,
+    "lambda_mask": 0,
+    "stage": "cdvqa"
+  }
+}
