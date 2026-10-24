@@ -8,11 +8,12 @@ temporal change representation on a question. The QAG model predicts both an
 answer and a grounding mask. A separate answer-only variant supports CDVQA.
 
 **Code available.** Model code, stage configurations, and training and
-evaluation scripts are included. Trained checkpoint download links are pending.
+evaluation scripts are included. The final QAG-360K checkpoint is available
+under [Checkpoints](#checkpoints); the CDVQA checkpoint download is pending.
 See [Attribution and licenses](#attribution-and-licenses) for the current
 licensing status and third-party notices.
 
-[Overview](#overview) · [Results](#results) ·
+[Overview](#overview) · [Results](#results) · [Checkpoints](#checkpoints) ·
 [Core implementation](#core-implementation) · [Installation](#installation) ·
 [Data](#data) · [Training](#training) ·
 [Evaluation](#standalone-evaluation) · [Code structure](#repository-layout)
@@ -36,6 +37,26 @@ higher is better.
 |---|---|---:|---:|---:|---:|
 | Temporal baseline | X3D-L | 77.04 | 72.42 | 43.30 | 50.11 |
 | **Ours** | X3D-L | **78.00** | **73.73** | **45.50** | **52.52** |
+
+## Checkpoints
+
+| Model | Download | Configuration | Size |
+|---|---|---|---:|
+| Final QAG-360K model | [Google Drive](https://drive.google.com/file/d/1d76yj2H4zUQoAS8TsdNxjbmRfsPzguLw/view) | [qag_full.json](configs/qag_full.json) | 503.1 MiB |
+
+Download `qtra_qag.pth` into `checkpoints/`. This model-only export preserves
+all 2,054 state tensors of the final checkpoint used in the manuscript. Its
+SHA256 has been verified against the uploaded file; checksums are recorded in
+[SHA256SUMS](SHA256SUMS). On Linux, verify the downloaded file from the
+repository root with:
+
+```bash
+(cd checkpoints && sha256sum -c ../SHA256SUMS)
+```
+
+Use the [standalone evaluation command](#standalone-evaluation) below with
+`configs/qag_full.json`. The CLIP RN101 initialization file is still required
+to construct the architecture. The CDVQA checkpoint is not yet published.
 
 ## Core implementation
 
@@ -190,9 +211,10 @@ checks only, not for reporting benchmark performance.
 
 ## Standalone evaluation
 
-Evaluation requires a trained checkpoint. Download links are pending; the
-example checkpoint paths below are placeholders for locally available weights.
-Use the configuration matching the checkpoint architecture.
+Download the final QAG checkpoint from [Checkpoints](#checkpoints) and save it
+as `checkpoints/qtra_qag.pth`. Use the configuration matching the checkpoint
+architecture. The CDVQA command requires locally available weights; its
+checkpoint download is still pending.
 
 ```bash
 python evaluate.py --config configs/qag_full.json \
