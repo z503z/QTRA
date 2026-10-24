@@ -7,12 +7,52 @@ QTRA (Question-Conditioned Temporal Residual Adapter) conditions an intermediate
 temporal change representation on a question. The QAG model predicts both an
 answer and a grounding mask. A separate answer-only variant supports CDVQA.
 
-**Release in preparation.** Model code, stage configurations, and training and
-evaluation scripts are included. Trained checkpoint download links will follow.
-Project-level licensing is being finalized; third-party notices are retained.
+**Code available.** Model code, stage configurations, and training and
+evaluation scripts are included. Trained checkpoint download links are pending.
+See [Attribution and licenses](#attribution-and-licenses) for the current
+licensing status and third-party notices.
 
-[Installation](#installation) · [Data](#data) · [Training](#training) ·
+[Overview](#overview) · [Results](#results) ·
+[Core implementation](#core-implementation) · [Installation](#installation) ·
+[Data](#data) · [Training](#training) ·
 [Evaluation](#standalone-evaluation) · [Code structure](#repository-layout)
+
+## Overview
+
+![QTRA framework: perception-frame temporal encoding, question-conditioned residual adaptation, answer prediction, and grounding prediction.](assets/qtra_method.png)
+
+**Framework overview.** (a) QTRA conditions the middle temporal feature on the
+question before the final encoder block. (b) The adapter combines token-level
+spatial modulation with global question-conditioned channel modulation.
+(c)–(d) The shared feature supports answer prediction and grounding, with a
+stop-gradient mask-evidence path for answer refinement.
+
+## Results
+
+QAG-360K test results reported in the manuscript. All values are percentages;
+higher is better.
+
+| Method | Backbone | OA | AA | mIoU | oIoU |
+|---|---|---:|---:|---:|---:|
+| Temporal baseline | X3D-L | 77.04 | 72.42 | 43.30 | 50.11 |
+| **Ours** | X3D-L | **78.00** | **73.73** | **45.50** | **52.52** |
+
+## Core implementation
+
+Use these links to locate the components described in the paper. Internal
+`QRA` and `calibration` names are retained for checkpoint compatibility.
+
+| Paper component | Implementation |
+|---|---|
+| Perception-frame temporal encoder | [`QChange3DSharedQRAEncoderForQAG`](qtra/models/qag.py#L386) |
+| QTRA: token attention, channel/spatial modulation, and residual update | [`_QRAStream2D`](qtra/models/qag.py#L201) |
+| QTRA insertion into the middle temporal slice | [`SharedQRAAdapter3D`](qtra/models/qag.py#L329) |
+| Global answer refinement | [`GatedResidualAnswerCalibrationHead`](qtra/models/qag.py#L133) |
+| Grounding decoders and dual-gated mask fusion | [`ProgressiveMaskDecoder`](qtra/models/qag.py#L63), [`DynamicKernelMaskDecoder`](qtra/models/qag.py#L97), and [fusion forward pass](qtra/models/qag.py#L647) |
+| Mask-evidence answer refinement | [`MaskGuidedResidualAnswerHead`](qtra/models/qag.py#L160) |
+| Full answer-and-grounding model | [Final model class](qtra/models/qag.py#L674) · [configuration](configs/qag_full.json) |
+| Temporal baseline | [`Change3D_QAG_Simple`](qtra/models/baseline.py#L67) · [configuration](configs/qag_baseline.json) |
+| CDVQA answer-only variant | [`QChange3D_SharedQRACalibration_CDVQA`](qtra/models/cdvqa.py#L119) · [configuration](configs/cdvqa.json) |
 
 ## Installation
 
@@ -20,6 +60,8 @@ The checked environment uses Python 3.11, PyTorch 2.2.0, torchvision 0.17.0 and
 CUDA 11.8. A CUDA GPU is recommended for training.
 
 ```bash
+git clone https://github.com/z503z/QTRA.git
+cd QTRA
 conda create -n qtra python=3.11 -y
 conda activate qtra
 pip install torch==2.2.0 torchvision==0.17.0 --index-url https://download.pytorch.org/whl/cu118

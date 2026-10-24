@@ -1,8 +1,9 @@
 # Third-party notices
 
-This is a private release candidate. A project-wide license for the authors'
-new code has not yet been assigned. The following notices do not replace the
-terms of any upstream component, dataset or pretrained model.
+The model code and training/evaluation scripts are publicly available in this
+repository. A project-wide license for the authors' new code has not yet been
+assigned. The following notices do not replace the terms of any upstream
+component, dataset or pretrained model.
 
 | Component | Source / provenance | Notice |
 |---|---|---|
