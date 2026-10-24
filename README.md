@@ -9,9 +9,7 @@ answer and a grounding mask. A separate answer-only variant supports CDVQA.
 
 **Code available.** Model code, stage configurations, and training and
 evaluation scripts are included. The final QAG-360K checkpoint is available
-under [Checkpoints](#checkpoints); the CDVQA checkpoint download is pending.
-See [Attribution and licenses](#attribution-and-licenses) for the current
-licensing status and third-party notices.
+under [Checkpoints](#checkpoints).
 
 [Overview](#overview) · [Results](#results) · [Checkpoints](#checkpoints) ·
 [Core implementation](#core-implementation) · [Installation](#installation) ·
@@ -44,19 +42,7 @@ higher is better.
 |---|---|---|---:|
 | Final QAG-360K model | [Google Drive](https://drive.google.com/file/d/1d76yj2H4zUQoAS8TsdNxjbmRfsPzguLw/view) | [qag_full.json](configs/qag_full.json) | 503.1 MiB |
 
-Download `qtra_qag.pth` into `checkpoints/`. This model-only export preserves
-all 2,054 state tensors of the final checkpoint used in the manuscript. Its
-SHA256 has been verified against the uploaded file; checksums are recorded in
-[SHA256SUMS](SHA256SUMS). On Linux, verify the downloaded file from the
-repository root with:
-
-```bash
-(cd checkpoints && sha256sum -c ../SHA256SUMS)
-```
-
-Use the [standalone evaluation command](#standalone-evaluation) below with
-`configs/qag_full.json`. The CLIP RN101 initialization file is still required
-to construct the architecture. The CDVQA checkpoint is not yet published.
+Download `qtra_qag.pth` into `checkpoints/`.
 
 ## Core implementation
 
@@ -213,8 +199,7 @@ checks only, not for reporting benchmark performance.
 
 Download the final QAG checkpoint from [Checkpoints](#checkpoints) and save it
 as `checkpoints/qtra_qag.pth`. Use the configuration matching the checkpoint
-architecture. The CDVQA command requires locally available weights; its
-checkpoint download is still pending.
+architecture. The CDVQA command requires locally available weights.
 
 ```bash
 python evaluate.py --config configs/qag_full.json \
@@ -230,7 +215,7 @@ python evaluate.py --config configs/cdvqa.json \
 
 For CDVQA Test2, change `--split` and the output filename. For CPU evaluation,
 use `--device cpu --precision fp32`. The evaluator strictly checks state-dict
-compatibility and records the checkpoint SHA256, precision and split. It will
+compatibility and records the precision and split. It will
 not overwrite an existing result file. Debug subset runs are explicitly marked.
 QAG AA and mIoU follow fixed eight-question-type averaging; oIoU aggregates pixel
 counts over the selected split.
